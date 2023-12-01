@@ -7,6 +7,11 @@ namespace webapi.Database
 {
     public class DatabaseContext : DbContext
     {
+        /*
+         * Entity Framework 8 Documentation
+         * https://learn.microsoft.com/en-us/ef/core/
+         */
+
         public DbSet<User> Users { get; set; }
         public DbSet<Message> Messages { get; set; }
         private string connectionString = "";
