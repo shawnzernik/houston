@@ -10,6 +10,14 @@ namespace webapi.Database
         /*
          * Entity Framework 8 Documentation
          * https://learn.microsoft.com/en-us/ef/core/
+         * 
+         * You need to make sure the CSPROJ file has the following:
+         * <Project Sdk="Microsoft.NET.Sdk.Web">
+         *     <PropertyGroup>
+         *          <InvariantGlobalization>false</InvariantGlobalization>
+         *     </PropertyGroup>         
+         * </Project>         
+         * 
          */
 
         public DbSet<User> Users { get; set; }

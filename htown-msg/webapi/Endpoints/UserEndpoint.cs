@@ -20,18 +20,18 @@ namespace webapi.Endpoints
         {
             DatabaseContext db = new DatabaseContext();
 
-            User trackedUser = null;
-            try { trackedUser = db.Users.Single(user => user.Guid == guid); }
+            User tracked = null;
+            try { tracked = db.Users.Single(user => user.Guid == guid); }
             catch (InvalidOperationException ex)
             {
                 if (!ex.Message.Contains("Sequence contains no elements"))
                     throw ex;
             }
 
-            if (trackedUser == null)
+            if (tracked == null)
                 return false;
 
-            db.Users.Remove(trackedUser);
+            db.Users.Remove(tracked);
             return db.SaveChanges() == 1;
         }
 
@@ -43,31 +43,32 @@ namespace webapi.Endpoints
                 return Update(context, value);
         }
 
-        private bool Update(HttpContext context, User value)
-        {
-            DatabaseContext db = new DatabaseContext();
-
-            User trackedUser = null;
-            try { trackedUser = db.Users.Single(user => user.Guid == value.Guid); }
-            catch(InvalidOperationException ex) {
-                if (!ex.Message.Contains("Sequence contains no elements"))
-                    throw ex;
-            }
-
-            if (trackedUser == null)
-                return Insert(context, value);
-
-            trackedUser.CopyFrom(value);
-            return db.SaveChanges() == 1;
-        }
-
         private bool Insert(HttpContext context, User value)
         {
-            if(value.Guid == null)
+            if (value.Guid == null)
                 value.Guid = Guid.NewGuid();
 
             DatabaseContext db = new DatabaseContext();
             db.Users.Add(value);
+            return db.SaveChanges() == 1;
+        }
+
+        private bool Update(HttpContext context, User value)
+        {
+            DatabaseContext db = new DatabaseContext();
+
+            User tracked = null;
+            try { tracked = db.Users.Single(user => user.Guid == value.Guid); }
+            catch(InvalidOperationException ex) 
+            {
+                if (!ex.Message.Contains("Sequence contains no elements"))
+                    throw ex;
+            }
+
+            if (tracked == null)
+                return Insert(context, value);
+
+            tracked.CopyFrom(value);
             return db.SaveChanges() == 1;
         }
 

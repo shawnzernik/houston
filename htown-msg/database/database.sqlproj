@@ -62,7 +62,7 @@
     <Build Include="dbo\Users.sql" />
     <Build Include="dbo\UK_Users_Name.sql" />
     <Build Include="dbo\Messages.sql" />
-    <Build Include="dbo\FK_Users_Messages.sql" />
+    <Build Include="dbo\FK_Messages_ToUser_Users_Guid.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="database.refactorlog" />
