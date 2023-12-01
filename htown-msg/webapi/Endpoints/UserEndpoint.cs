@@ -1,14 +1,14 @@
-﻿
-
-using webapi.Pocos;
+﻿using webapi.Database;
 
 namespace webapi.Endpoints
 {
     public class UserEndpoint
     {
+        private WebApplication app;
 
         public UserEndpoint(WebApplication app)
         {
+            this.app = app;
             app.MapGet("/users", GetAll).WithOpenApi();
             app.MapPost("/user", Save).WithOpenApi();
             app.MapDelete("/user/{guid}", Remove).WithOpenApi();

@@ -1,0 +1,7 @@
+﻿CREATE TABLE [dbo].[Messages]
+(
+	[Guid] UNIQUEIDENTIFIER NOT NULL PRIMARY KEY, 
+    [To User] UNIQUEIDENTIFIER NOT NULL, 
+    [Created] DATETIME NOT NULL, 
+    [Content] VARCHAR(MAX) NOT NULL
+)

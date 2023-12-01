@@ -1,4 +1,4 @@
-﻿namespace webapi.Pocos
+﻿namespace webapi.Database
 {
     public class Message
     {

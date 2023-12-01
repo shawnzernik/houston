@@ -1,6 +1,4 @@
-﻿
-
-namespace webapi.Endpoints
+﻿namespace webapi.Endpoints
 {
     public class WeatherEndpoint
     {
