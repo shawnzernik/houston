@@ -25,7 +25,7 @@ namespace webapi.Endpoints
             catch(InvalidOperationException ex)
             {
                 if (!ex.Message.Contains("Sequence contained no elements"))
-                    throw ex;
+                    throw;
             }
 
             if (tracked == null)
@@ -62,7 +62,7 @@ namespace webapi.Endpoints
             catch(InvalidOperationException ex)
             {
                 if (!ex.Message.Contains("Sequence contains no elements"))
-                    throw ex;
+                    throw;
             }
 
             if (tracked == null)
