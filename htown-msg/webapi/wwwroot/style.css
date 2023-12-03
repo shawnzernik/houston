@@ -1,0 +1,19 @@
+﻿.w32 {
+    width: 18em;
+}
+
+.w64 {
+    width: 36em;
+}
+
+.multiline {
+    height: 6em;
+}
+
+.right {
+    text-align: right;
+}
+
+.top {
+    vertical-align: top;
+}

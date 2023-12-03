@@ -3,8 +3,27 @@
 <head>
     <meta charset="utf-8" />
     <title>Message List</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="messages.js"></script>
 </head>
 <body>
-
+    <h1>Message List</h1>
+    <table>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>GUID</td>
+            <td>To</td>
+            <td>Created</td>
+        </tr>
+        <tr id="template">
+            <td><input type="checkbox" /></td>
+            <td><a href="message.html?id=deadbeefdeadbeefdeadbeefdeadbeef">deadbeefdeadbeefdeadbeefdeadbeef</a></td>
+            <td><a href="message.html?id=deadbeefdeadbeefdeadbeefdeadbeef">John Doe</a></td>
+            <td><a href="message.html?id=deadbeefdeadbeefdeadbeefdeadbeef">2023-01-01 01:01:01</a></td>
+            <td><a href="message.html?id=deadbeefdeadbeefdeadbeefdeadbeef">The first 100 chars of the ...</a></td>
+        </tr>
+    </table>
+    <button>Add</button>
+    <button>Delete</button>
 </body>
 </html>

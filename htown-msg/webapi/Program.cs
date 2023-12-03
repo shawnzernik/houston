@@ -14,7 +14,6 @@ if (app.Environment.IsDevelopment())
 app.UseDefaultFiles();
 app.UseStaticFiles();
 
-var weatherEndpoint = new WeatherEndpoint(app);
 var messageEndpoint = new MessageEndpoint(app);
 var userEndpoint = new UserEndpoint(app);
 

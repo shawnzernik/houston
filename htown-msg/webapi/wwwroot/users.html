@@ -3,8 +3,24 @@
 <head>
     <meta charset="utf-8" />
     <title>User List</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="text/javascript" src="users.js"></script>
 </head>
 <body>
-
+    <h1>User List</h1>
+    <table>
+        <tr>
+            <td><input type="checkbox" /></td>
+            <td>GUID</td>
+            <td>Name</td>
+        </tr>
+        <tr id="template">
+            <td><input type="checkbox" /></td>
+            <td><a href="user.html?id=deadbeefdeadbeefdeadbeefdeadbeef">deadbeefdeadbeefdeadbeefdeadbeef</a></td>
+            <td><a href="user.html?id=deadbeefdeadbeefdeadbeefdeadbeef">John Doe</a></td>
+        </tr>
+    </table>
+    <button>Add</button>
+    <button>Delete</button>
 </body>
 </html>
