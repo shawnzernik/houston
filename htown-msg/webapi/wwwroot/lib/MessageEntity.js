@@ -17,4 +17,10 @@
 
     get content() { return this.#content; }
     set content(value) { this.#content = value; }
+
+    static loadAll() {
+        
+    }
+    save() { }
+    remove() { }
 }
