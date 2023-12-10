@@ -30,11 +30,12 @@ export class UserEntity {
 
                 return response.json();
             })
-            .then((data) => {
-                if (typeof (data) !== "boolean")
-                    return false;
+            .then((json) => {
+                let webApiResponse = new WebApiResponse(json);
+                if (webApiResponse.error)
+                    throw new Error(webApiResponse.getMessages());
 
-                return data;
+                return WebApiReponse.content;
             });
     }
 
