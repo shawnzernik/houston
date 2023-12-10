@@ -31,11 +31,11 @@ export class UserEntity {
                 return response.json();
             })
             .then((json) => {
-                let webApiResponse = new WebApiResponse(json);
-                if (webApiResponse.error)
-                    throw new Error(webApiResponse.getMessages());
+                let response = new WebApiResponse(json);
+                if (response.error)
+                    throw new Error(response.getMessages());
 
-                return webApiResponse.content;
+                return response.content;
             });
     }
 
@@ -48,12 +48,12 @@ export class UserEntity {
                 return response.json();
             })
             .then((json) => {
-                let webApiResponse = new WebApiResponse(json);
-                if (webApiResponse.error)
-                    throw new Error(webApiResponse.getMessages());
+                let response = new WebApiResponse(json);
+                if (response.error)
+                    throw new Error(response.getMessages());
 
                 let ret = new UserEntity();
-                ret.copyFrom(webApiResponse.content);
+                ret.copyFrom(response.content);
                 return ret;
             });
     }
@@ -66,15 +66,15 @@ export class UserEntity {
                 return response.json();
             })
             .then((json) => {
-                let webApiResponse = new WebApiResponse(json);
-                if (webApiResponse.error)
-                    throw new Error(webApiResponse.getMessages());
+                let response = new WebApiResponse(json);
+                if (response.error)
+                    throw new Error(response.getMessages());
 
-                if (!Array.isArray(webApiResponse.content))
+                if (!Array.isArray(response.content))
                     throw new Error("Load all users did not return an array!");
 
                 let ret = [];
-                webApiResponse.content.forEach((row) => {
+                response.content.forEach((row) => {
                     let newRow = new UserEntity();
                     newRow.copyFrom(row);
                     ret.push(newRow);
@@ -95,11 +95,11 @@ export class UserEntity {
                 return response.json();
             })
             .then((json) => {
-                let webApiResponse = new WebApiResponse(json);
-                if (webApiResponse.error)
-                    throw new Error(webApiResponse.getMessages());
+                let response = new WebApiResponse(json);
+                if (response.error)
+                    throw new Error(response.getMessages());
 
-                return WebApiReponse.content;
+                return response.content;
             });
     }
 }
