@@ -39,24 +39,6 @@ export class UserEntity {
             });
     }
 
-    static load(guid) {
-        return fetch("/user/" + guid)
-            .then((response) => {
-                if (!response.ok)
-                    throw new Error("Status " + response.status + ": " + response.statusText);
-
-                return response.json();
-            })
-            .then((json) => {
-                let response = new WebApiResponse(json);
-                if (response.error)
-                    throw new Error(response.getMessages());
-
-                let ret = new UserEntity();
-                ret.copyFrom(response.content);
-                return ret;
-            });
-    }
     static loadAll() {
         return fetch("/users")
             .then((response) => {
@@ -81,7 +63,25 @@ export class UserEntity {
                 });
 
                 return ret;
+            });
+    }
+    static load(guid) {
+        return fetch("/user/" + guid)
+            .then((response) => {
+                if (!response.ok)
+                    throw new Error("Status " + response.status + ": " + response.statusText);
+
+                return response.json();
             })
+            .then((json) => {
+                let response = new WebApiResponse(json);
+                if (response.error)
+                    throw new Error(response.getMessages());
+
+                let ret = new UserEntity();
+                ret.copyFrom(response.content);
+                return ret;
+            });
     }
     static remove(guid) {
         if (!guid)
