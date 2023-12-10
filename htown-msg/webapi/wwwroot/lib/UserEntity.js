@@ -49,7 +49,7 @@ export class UserEntity {
             .then((json) => {
                 let webApiResponse = new WebApiResponse(json);
                 if (webApiResponse.error)
-                    throw new Error(webApiResponse.error);
+                    throw new Error(webApiResponse.getMessages());
 
                 let ret = new UserEntity();
                 ret.copyFrom(webApiResponse.content);
@@ -67,7 +67,7 @@ export class UserEntity {
             .then((json) => {
                 let webApiResponse = new WebApiResponse(json);
                 if (webApiResponse.error)
-                    throw new Error(webApiResponse.error);
+                    throw new Error(webApiResponse.getMessages());
 
                 if (!Array.isArray(webApiResponse.content))
                     throw new Error("Load all users did not return an array!");
@@ -93,7 +93,7 @@ export class UserEntity {
             .then((json) => {
                 let webApiResponse = new WebApiResponse(json);
                 if (webApiResponse.error)
-                    throw new Error(webApiResponse.error);
+                    throw new Error(webApiResponse.getMessages());
 
                 return WebApiReponse.content;
             });
