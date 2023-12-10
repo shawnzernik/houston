@@ -31,8 +31,11 @@ window.onload = () => {
     document.getElementById("saveButton").onclick = () => {
         loadEntityFromControls();
         userEntity.save()
-            .then((ret) => {
-                window.location.assign("users.html");
+            .then((isChanged) => {
+                if (isChanged)
+                    window.location.assign("users.html");
+                else
+                    alert("No changes saved!");
             })
             .catch((err) => {
                 alert(err.message);
@@ -40,11 +43,17 @@ window.onload = () => {
     };
     document.getElementById("deleteButton").onclick = () => {
         UserEntity.remove(userEntity.guid)
-            .then((ret) => {
-                window.location.assign("users.html");
+            .then((isChanged) => {
+                if (isChanged)
+                    window.location.assign("users.html");
+                else
+                    alert("Nothing deleted!");
             })
             .catch((err) => {
                 alert(err.message);
             });
+    };
+    document.getElementById("backButton").onclick = () => {
+        window.location.assign("users.html");
     };
 };

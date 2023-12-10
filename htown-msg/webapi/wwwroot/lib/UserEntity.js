@@ -35,7 +35,7 @@ export class UserEntity {
                 if (webApiResponse.error)
                     throw new Error(webApiResponse.getMessages());
 
-                return WebApiReponse.content;
+                return webApiResponse.content;
             });
     }
 
@@ -84,6 +84,9 @@ export class UserEntity {
             })
     }
     static remove(guid) {
+        if (!guid)
+            return Promise.resolve().then(() => { return false; })
+
         return fetch("/user/" + guid, { method: "DELETE" })
             .then((response) => {
                 if (!response.ok)
