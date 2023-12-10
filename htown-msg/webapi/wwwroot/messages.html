@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <title>Message List</title>
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="messages.js"></script>
+    <script type="module" src="messages.js"></script>
 </head>
 <body>
     <h1>Message List</h1>
@@ -21,12 +21,13 @@
             <tr id="template" style="visibility: hidden">
                 <td><input type="checkbox" class="selectCheck" value="{guid}" /></td>
                 <td><a href="message.html?guid={guid}">{guid}</a></td>
-                <td><a href="message.html?guid={guid}">{contact}</a></td>
+                <td><a href="message.html?guid={guid}">{toUser}</a></td>
                 <td><a href="message.html?guid={guid}">{created}</a></td>
                 <td><a href="message.html?guid={guid}">{content}</a></td>
             </tr>
         </tbody>
     </table>
+    <button id="homeButton">Home</button>
     <button id="addButton">Add</button>
     <button id="deleteButton">Delete</button>
 </body>

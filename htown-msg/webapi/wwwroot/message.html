@@ -4,17 +4,24 @@
     <meta charset="utf-8" />
     <title>Message Edit</title>
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="message.js"></script>
+    <script type="module" src="message.js"></script>
 </head>
 <body>
     <h1>Message Edit</h1>
     <table>
-        <tr><td class="right">GUID:</td><td><input class="w32" /></td></tr>
-        <tr><td class="right">To:</td><td><input class="w32" /></td></tr>
-        <tr><td class="right">Created:</td><td><input type="datetime" /></td></tr>
-        <tr><td class="right top">Content:</td><td><textarea class="w64 multiline"></textarea></td></tr>
+        <tr><td class="right">GUID:</td><td><input id="guidInput" class="w32" readonly /></td></tr>
+        <tr>
+            <td class="right">To:</td>
+            <td>
+                <select id="toUserSelect" class="w32">
+                </select>
+            </td>
+        </tr>
+        <tr><td class="right">Created:</td><td><input id="createdInput" readonly /></td></tr>
+        <tr><td class="right top">Content:</td><td><textarea id="contentText" class="w64 multiline"></textarea></td></tr>
     </table>
-    <button>Save</button>
-    <button>Delete</button>
+    <button id="backButton">Back</button>
+    <button id="saveButton">Save</button>
+    <button id="deleteButton">Delete</button>
 </body>
 </html>

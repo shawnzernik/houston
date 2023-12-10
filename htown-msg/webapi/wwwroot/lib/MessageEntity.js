@@ -1,10 +1,10 @@
-﻿
+﻿import { WebApiResponse } from "/lib/WebApiResponse.js";
 
 export class MessageEntity {
     constructor(guid, toUser, created, content) {
         this.guid = guid;
-        this.toUSer = toUser;
-        this.created = created;
+        this.toUser = toUser;
+        this.created = created ?? new Date().toISOString();
         this.content = content;
     }
 
@@ -14,7 +14,7 @@ export class MessageEntity {
     content = null;
 
     copyFrom(original) {
-        this.guid = origin.guid;
+        this.guid = original.guid;
         this.toUser = original.toUser;
         this.created = original.created;
         this.content = original.content;

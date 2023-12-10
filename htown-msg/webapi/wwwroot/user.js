@@ -4,33 +4,39 @@ window.onload = () => {
     let guidInput = document.getElementById("guidInput");
     let nameInput = document.getElementById("nameInput");
 
-    let userEntity = new UserEntity();
+    let entity = new UserEntity();
 
     let loadControlsFromEntity = () => {
-        guidInput.value = userEntity.guid ?? "";
-        nameInput.value = userEntity.name ?? "";
+        guidInput.value = entity.guid ?? "";
+        nameInput.value = entity.name ?? "";
     };
     let loadEntityFromControls = () => {
-        userEntity.name = nameInput.value;
+        entity.name = nameInput.value;
     };
 
+    let promises = [];
+
     let guid = new URLSearchParams(window.location.search).get("guid");
-    if (typeof (guid) === "string" && guid.length === 36)
-        UserEntity.load(guid)
-            .then((user) => {
-                userEntity = user;
-                loadControlsFromEntity();
-            })
-            .catch((err) => {
-                alert(err.message);
-                window.location.assign("users.html");
-            });
-    else
-        loadControlsFromEntity();
+    if (guid && guid.length === 36)
+        promises.push(
+            UserEntity.load(guid)
+                .then((user) => {
+                    entity = user;
+                })
+        );
+
+    Promise.all(promises)
+        .then(() => {
+            loadControlsFromEntity();
+        })
+        .catch((err) => {
+            alert(err.message);
+            window.location.assign("users.html");
+        });
 
     document.getElementById("saveButton").onclick = () => {
         loadEntityFromControls();
-        userEntity.save()
+        entity.save()
             .then((isChanged) => {
                 if (isChanged)
                     window.location.assign("users.html");
@@ -42,7 +48,7 @@ window.onload = () => {
             });
     };
     document.getElementById("deleteButton").onclick = () => {
-        UserEntity.remove(userEntity.guid)
+        UserEntity.remove(entity.guid)
             .then((isChanged) => {
                 if (isChanged)
                     window.location.assign("users.html");

@@ -21,6 +21,9 @@ window.onload = () => {
             alert(err.message);
         });
 
+    document.getElementById("homeButton").onclick = () => {
+        window.location.assign("index.html");
+    };
     document.getElementById("addButton").onclick = () => {
         window.location.assign("user.html");
     };
