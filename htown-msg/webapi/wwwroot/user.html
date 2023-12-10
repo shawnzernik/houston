@@ -4,15 +4,15 @@
     <meta charset="utf-8" />
     <title>User Edit</title>
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="user.js"></script>
+    <script type="module" src="user.js"></script>
 </head>
 <body>
     <h1>User Edit</h1>
     <table>
-        <tr><td class="right">GUID:</td><td><input value="deadbeefdeadbeefdeadbeefdeadbeef" class="w32" /></td></tr>
-        <tr><td class="right">Name:</td><td><input value="John Doe" class="w32  "/></td></tr>
+        <tr><td class="right">GUID:</td><td><input id="guidInput" value="" class="w32" readonly /></td></tr>
+        <tr><td class="right">Name:</td><td><input id="nameInput" value="" class="w32  "/></td></tr>
     </table>
-    <button>Save</button>
-    <button>Delete</button>
+    <button id="saveButton">Save</button>
+    <button id="deleteButton">Delete</button>
 </body>
 </html>

@@ -1,25 +1,44 @@
 ﻿class Message {
     constructor(guid, toUser, created, content) {
-        this.#guid = guid;
-        this.#toUSer = toUser;
-        this.#created = created;
-        this.#content = content;
+        this.guid = guid;
+        this.toUSer = toUser;
+        this.created = created;
+        this.content = content;
     }
 
-    get guid() { return this.#guid; }
-    set guid(value) { this.#guid = value; }
+    guid = null;
+    toUser = null;
+    created = new Date(Date.now);
+    content = null;
 
-    get toUser() { return this.#toUser; }
-    set toUser(value) { this.#toUser = value; }
-
-    get created() { return this.#created; }
-    set created(value) { this.#created = value; }
-
-    get content() { return this.#content; }
-    set content(value) { this.#content = value; }
+    copyFrom(original) {
+        this.guid = origin.guid;
+        this.toUser = original.toUser;
+        this.created = original.created;
+        this.content = original.content;
+    }
 
     static loadAll() {
-        
+        return fetch("/messages")
+            .then((response) => {
+                if (!response.ok)
+                    throw new Error("Status " + response.status + ": " + response.statusText);
+
+                return response.json();
+            })
+            .then((data) => {
+                if (!Array.isArray(data))
+                    throw new Error("Load all messages did not return an array!");
+
+                let ret = [];
+                data.forEach((row) => {
+                    let newRow = new MessageEntity();
+                    newRow.copyFrom(row);
+                    ret.push(newRow);
+                });
+
+                return ret;
+            })
     }
     save() { }
     remove() { }

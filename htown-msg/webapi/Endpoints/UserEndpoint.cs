@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.SqlClient;
-using Microsoft.EntityFrameworkCore;
-using webapi.Database;
+﻿using webapi.Database;
 
 namespace webapi.Endpoints
 {
@@ -12,70 +10,53 @@ namespace webapi.Endpoints
         {
             this.app = app;
             app.MapGet("/users", GetAll).WithOpenApi();
-            app.MapPost("/user", Save).WithOpenApi();
-            app.MapDelete("/user/{guid}", Remove).WithOpenApi();
+            app.MapGet("/user/{guid}", GetGuid).WithOpenApi();
+            app.MapPost("/user", PostSave).WithOpenApi();
+            app.MapDelete("/user/{guid}", DeleteGuid).WithOpenApi();
         }
 
-        private bool Remove(HttpContext context, Guid guid)
+        private Response<List<UserEntity>> GetAll(HttpContext context)
         {
-            DatabaseContext db = new DatabaseContext();
-
-            User tracked = null;
-            try { tracked = db.Users.Single(user => user.Guid == guid); }
-            catch (InvalidOperationException ex)
+            try
             {
-                if (!ex.Message.Contains("Sequence contains no elements"))
-                    throw;
+                return new Response<List<UserEntity>>(UserEntity.LoadAll());
             }
-
-            if (tracked == null)
-                return false;
-
-            db.Users.Remove(tracked);
-            return db.SaveChanges() == 1;
-        }
-
-        private bool Save(HttpContext context, User value)
-        {
-            if (value.Guid == null)
-                return Insert(context, value);
-            else
-                return Update(context, value);
-        }
-
-        private bool Insert(HttpContext context, User value)
-        {
-            if (value.Guid == null)
-                value.Guid = Guid.NewGuid();
-
-            DatabaseContext db = new DatabaseContext();
-            db.Users.Add(value);
-            return db.SaveChanges() == 1;
-        }
-
-        private bool Update(HttpContext context, User value)
-        {
-            DatabaseContext db = new DatabaseContext();
-
-            User tracked = null;
-            try { tracked = db.Users.Single(user => user.Guid == value.Guid); }
-            catch(InvalidOperationException ex) 
+            catch (Exception ex)
             {
-                if (!ex.Message.Contains("Sequence contains no elements"))
-                    throw;
+                return new Response<List<UserEntity>>(ex);
             }
-
-            if (tracked == null)
-                return Insert(context, value);
-
-            tracked.CopyFrom(value);
-            return db.SaveChanges() == 1;
         }
-
-        private List<User> GetAll(HttpContext context)
+        private Response<UserEntity> GetGuid(HttpContext context, Guid guid)
         {
-            DatabaseContext db = new DatabaseContext();
-            return db.Users.OrderBy(user => user.Name).ToList();
+            try
+            {
+                return new Response<UserEntity>(UserEntity.LoadGuid(guid));
+            }
+            catch (Exception ex)
+            {
+                return new Response<UserEntity>(ex);
+            }
+        }
+        private Response<bool> PostSave(HttpContext context, UserEntity value)
+        {
+            try
+            {
+                return new Response<bool>(value.Save());
+            }
+            catch (Exception ex)
+            {
+                return new Response<bool>(ex);
+            }
+        }
+        private Response<bool> DeleteGuid(HttpContext context, Guid guid)
+        {
+            try {
+                return new Response<bool>(UserEntity.Remove(guid));
+            }
+            catch (Exception ex)
+            {
+                return new Response<bool>(ex);
+            }
         }
     }
 }

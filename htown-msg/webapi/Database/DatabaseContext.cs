@@ -20,8 +20,8 @@ namespace webapi.Database
          * 
          */
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Message> Messages { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
+        public DbSet<MessageEntity> Messages { get; set; }
         private string connectionString = "";
         public DatabaseContext() {
             // Data Source=LOCALHOST;Initial Catalog=Message Board;User ID=sa;Password=Welcome123
