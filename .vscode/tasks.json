@@ -47,15 +47,6 @@
 			"problemMatcher": []
 		},
 		{
-			"label": "sqlpackage script",
-			"type": "shell",
-			"command": "sqlpackage /a:script /sf:database.dacpac /tsn:localhost /tu:sa /tp:Welcome123 /tdn:MessageBoard /ttsc:true",
-			"options": {
-				"cwd": "${workspaceFolder}/htown-msg/database/bin/Debug"
-			},
-			"problemMatcher": []
-		},
-		{
 			"label": "msg build image",
 			"type": "shell",
 			"command": "docker build -t szmsg .",
