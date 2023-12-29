@@ -10,8 +10,9 @@ The following is an exploration project of using docker and k8s.  The outline be
 - htown-http -- this is a simple web server with a index.html copied into it to test creating custom docker containers
 - htown-msg -- this is a message board web application in Visual Studio (not vscode).  This uses a database (mssql), web apis, and a simple html front end.  This will be the basis for what I'm looking to containerize and break apart.  There is a DB project that can be deployed to MS SQL to create your database.
 - htown-mssql -- this is the mssql server used by htown-msg
-  - this container stored the databases inside the container... **This is not production grade!**  The ".mdb" and ".log" files should be stored on a persistent volume outside the container.
+  - *the log and data files are being stored on the local filesystem*
 - htown-ubuntu -- this is an ubuntu box on the houston network to troubleshoot with
+  - *the root users home directory is stored on the local filesystem*
 
 ## Platform Independence
 
