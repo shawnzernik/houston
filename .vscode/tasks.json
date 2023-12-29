@@ -2,7 +2,7 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "msg dotnet build",
+			"label": "dotnet build",
 			"command": "dotnet",
 			"type": "process",
 			"args": [
@@ -14,7 +14,7 @@
 			"problemMatcher": "$msCompile" 
 		},
 		{
-			"label": "msg dotnet publish",
+			"label": "dotnet publish",
 			"command": "dotnet",
 			"type": "process",
 			"args": [
@@ -26,7 +26,7 @@
 			"problemMatcher": "$msCompile"
 		},
 		{
-			"label": "msg dotnet watch",
+			"label": "dotnet watch",
 			"command": "dotnet",
 			"type": "process",
 			"args": [
@@ -36,6 +36,24 @@
 				"${workspaceFolder}/htown-msg/htown-msg.sln"
 			],
 			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "sqlpackage publish",
+			"type": "shell",
+			"command": "sqlpackage /a:publish /sf:database.dacpac /tsn:localhost /tu:sa /tp:Welcome123 /tdn:MessageBoard /ttsc:true /p:DropObjectsNotInSource=true /p:BlockOnPossibleDataLoss=true",
+			"options": {
+				"cwd": "${workspaceFolder}/htown-msg/database/bin/Debug"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "sqlpackage script",
+			"type": "shell",
+			"command": "sqlpackage /a:script /sf:database.dacpac /tsn:localhost /tu:sa /tp:Welcome123 /tdn:MessageBoard /ttsc:true",
+			"options": {
+				"cwd": "${workspaceFolder}/htown-msg/database/bin/Debug"
+			},
+			"problemMatcher": []
 		},
 		{
 			"label": "msg build image",
