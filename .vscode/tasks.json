@@ -1,0 +1,176 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "msg dotnet build",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"build",
+				"${workspaceFolder}/htown-msg/htown-msg.sln",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary;ForceNoAlign"
+			],
+			"problemMatcher": "$msCompile" 
+		},
+		{
+			"label": "msg dotnet publish",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"publish",
+				"${workspaceFolder}/htown-msg/htown-msg.sln",
+				"/property:GenerateFullPaths=true",
+				"/consoleloggerparameters:NoSummary;ForceNoAlign"
+			],
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "msg dotnet watch",
+			"command": "dotnet",
+			"type": "process",
+			"args": [
+				"watch",
+				"run",
+				"--project",
+				"${workspaceFolder}/htown-msg/htown-msg.sln"
+			],
+			"problemMatcher": "$msCompile"
+		},
+		{
+			"label": "msg build image",
+			"type": "shell",
+			"command": "docker build -t szmsg .",
+			"options": {
+				"cwd": "${workspaceFolder}/htown-msg"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "msg create container",
+			"type": "shell",
+			"command": "docker create --name htown-msg --network houston -p 8080:8080 -e CONNECTION_STRING=\"Data Source=htown-mssql;Initial Catalog=MessageBoard;User ID=sa;Password=Welcome123;TrustServerCertificate=Yes\" szmsg",
+			"problemMatcher": []
+		},
+		{
+			"label": "msg rm container",
+			"type": "shell",
+			"command": "docker rm htown-msg",
+			"problemMatcher": []
+		},
+		{
+			"label": "msg start container",
+			"type": "shell",
+			"command": "docker start htown-msg",
+			"problemMatcher": []
+		},
+		{
+			"label": "msg stop container",
+			"type": "shell",
+			"command": "docker stop htown-msg",
+			"problemMatcher": []
+		},
+		{
+			"label": "docker network create houston",
+			"type": "shell",
+			"command": "docker network create houston",
+			"problemMatcher": []
+		},
+		{
+			"label": "docker network rm houston",
+			"type": "shell",
+			"command": "docker network rm houston",
+			"problemMatcher": []
+		},
+		{
+			"label": "http build image",
+			"type": "shell",
+			"command": "docker build -t szhttp .",
+			"options": {
+				"cwd": "${workspaceFolder}/htown-http"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "http create container",
+			"type": "shell",
+			"command": "docker create --name htown-http --network houston -p 80:80 szhttp",
+			"problemMatcher": []
+		},
+		{
+			"label": "http rm container",
+			"type": "shell",
+			"command": "docker rm htown-http",
+			"problemMatcher": []
+		},
+		{
+			"label": "http start container",
+			"type": "shell",
+			"command": "docker start htown-http",
+			"problemMatcher": []
+		},
+		{
+			"label": "http stop container",
+			"type": "shell",
+			"command": "docker stop htown-http",
+			"problemMatcher": []
+		},
+		{
+			"label": "mssql create container",
+			"type": "shell",
+			"command": "docker create -e \"ACCEPT_EULA=Y\" -e \"MSSQL_SA_PASSWORD=Welcome123\" -v \"${workspaceFolder}/htown-mssql/data\":/var/opt/mssql/data -v \"${workspaceFolder}/htown-mssql/log\":/var/opt/mssql/log -p 1433:1433 --network houston --name htown-mssql mcr.microsoft.com/azure-sql-edge",
+			
+			
+			"problemMatcher": []
+		},
+		{
+			"label": "mssql rm container",
+			"type": "shell",
+			"command": "docker rm htown-mssql",
+			"problemMatcher": []
+		},
+		{
+			"label": "mssql start container",
+			"type": "shell",
+			"command": "docker start htown-mssql",
+			"problemMatcher": []
+		},
+		{
+			"label": "mssql stop container",
+			"type": "shell",
+			"command": "docker stop htown-mssql",
+			"problemMatcher": []
+		},
+		{
+			"label": "ubuntu create container",
+			"type": "shell",
+			"command": "docker create --name htown-ubuntu --network houston -v \"${workspaceFolder}/htown-ubuntu/root\":/root -it ubuntu",
+			"problemMatcher": []
+ 		},
+		{
+			"label": "ubuntu rm container",
+			"type": "shell",
+			"command": "docker rm htown-ubuntu",
+			"problemMatcher": []
+		},
+		{
+			"label": "ubuntu attach container",
+			"type": "shell",
+			"command": "docker attach htown-ubuntu",
+			"problemMatcher": []
+		},		
+		{
+			"label": "ubuntu start container",
+			"type": "shell",
+			"command": "docker start htown-ubuntu",
+			"problemMatcher": []
+		},
+		{
+			"label": "ubuntu stop container",
+			"type": "shell",
+			"command": "docker stop htown-ubuntu",
+			"problemMatcher": []
+		}
+		
+	]
+}

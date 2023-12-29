@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Hosting.Server;
-using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Runtime.Intrinsics.X86;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace webapi.Database
 {

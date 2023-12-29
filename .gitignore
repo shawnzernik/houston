@@ -3,3 +3,13 @@ bin
 obj
 *.dbmdl
 *.jfm
+.DS_Store
+htown-mssql/data/*.mdf
+htown-mssql/data/*.ldf
+htown-mssql/data/*.bin
+htown-mssql/log/services
+htown-mssql/log/errorlog
+htown-mssql/log/errorlog.*
+htown-mssql/log/*.trc
+htown-mssql/log/*.log
+htown-mssql/log/system*
