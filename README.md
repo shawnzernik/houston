@@ -77,3 +77,13 @@ Additional Documentation:
 - Add projects to solution:
   - dotnet sln htown-msg.sln add webapi
   - dotnet sln htown-msg.sln add database
+
+### Adding Nuget Dependencies
+
+Use the following to searhc for a Nuget dependency:
+
+- nuget search NAME
+
+Use the following to add a Nuget Dependency:
+
+- dotnet add "webapi.csproj" package Microsoft.Extensions.Logging.Console

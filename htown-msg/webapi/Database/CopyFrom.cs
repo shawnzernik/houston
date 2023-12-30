@@ -1,7 +1,6 @@
-﻿namespace webapi.Database
+﻿namespace webapi.Database;
+
+public interface CopyFrom<T>
 {
-    public interface CopyFrom<T>
-    {
-        void CopyFrom(T source);
-    }
+    void CopyFrom(T source);
 }
