@@ -13,3 +13,8 @@ htown-mssql/log/errorlog.*
 htown-mssql/log/*.trc
 htown-mssql/log/*.log
 htown-mssql/log/system*
+pipeline/terraform/.terraform
+.terraform.lock.hcl
+tf_log.txt
+terraform.tfstate
+terraform.tfstate.backup

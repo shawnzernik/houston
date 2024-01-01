@@ -41,6 +41,8 @@ To see the docker commands, please reference:
 - .NET 0.8 SDK - <https://dotnet.microsoft.com/en-us/download/dotnet/8.0>
 - Installing SQL Package Command - <https://learn.microsoft.com/en-us/sql/tools/sqlpackage/sqlpackage-download?view=sql-server-ver16>
 - SqlProjects for VS Code - <https://github.com/rr-wfm/MSBuild.Sdk.SqlProj>
+- HashiCorp Terraform - <https://marketplace.visualstudio.com/items?itemName=HashiCorp.terraform>
+- ChatGPT - <https://marketplace.visualstudio.com/items?itemName=zhang-renyang.chat-gpt>
 
 ### SQL Project / DacFX
 
@@ -87,3 +89,110 @@ Use the following to searhc for a Nuget dependency:
 Use the following to add a Nuget Dependency:
 
 - dotnet add "webapi.csproj" package Microsoft.Extensions.Logging.Console
+
+## Azure Setup
+
+The resources in Azure are not publically accessible outside Azure.  This poses a problem as we need to interact with the database and other services / servers directly.  To solve this, a OpenVPN server was configured and installed as an EC2 instance.  I used the following subscription:
+
+- OpenVPN Access Server (5 Connected Devices)
+
+Follow the directions provided by the vendor - they do a good job getting everything setup.  The network model I used was NAT.  I also allowed the DNS to be modified on clients.  This allows me to use the Azure host names directly.
+
+### Configuring the CLI
+
+Use the following to "configure" the CLI.  This will allow you to skip the "aws configure" command:
+
+- export AWS_ACCESS_KEY_ID=<USERS_ACCESS_KEY>
+- export AWS_SECRET_ACCESS_KEY=<SECRET_FOR_ACCESS_KEY>
+- export AWS_DEFAULT_REGION=<REGION>
+
+## Connecting to MS SQL from the Mac
+
+Microsoft SQL Management Studio is a Windows only product.  From the Mac, I used Azure Data Studio.
+
+## Pipeline Simulation -- WORK IN PROGRESS
+
+In the pipeline folder you will find a series of scripts that will deploy the application to AWS.  Below is a description of files and folders:
+
+- terraform - this folder contains the Terraform scripts used.
+- kubernetes - this folder has the Kubernetes scripts used.
+- build.sh - this build the docker container and pushes it to the AWS container repository
+- apply-tf.sh - this provisions the SQL server and Kubernetes cluster.
+- apply-k8s.sh - this applies the kubernetes scripts.
+- publish-db.sh - this publishes the database
+
+Collectively, you'll need to connect to the VPN and run the scripts from the "pipeline" folder in the following order:
+
+1. build.sh
+2. apply-tf.sh
+3. publish-db.sh
+4. apply-k8s.sh
+
+You should now have a working application in AWS.
+
+## Terraform Logging / Debugging
+
+- <https://developer.hashicorp.com/terraform/internals/debuggingexpo>
+- <https://developer.hashicorp.com/terraform/tutorials/configuration-language/troubleshooting-workflow#bug-reporting-best-practices?utm_source=WEBSITE&utm_medium=WEB_IO&utm_offer=ARTICLE_PAGE&utm_content=DOCS>
+
+## Install eksctl
+
+- <https://eksctl.io/installation/>
+
+## Conecting kubectl
+
+Validate AWS CLI connection and user:
+
+- aws sts get-caller-identity
+
+Make a backup of your config file:
+
+- cp ~/.kube/config ~/kube-config-old
+
+Update the config file:
+
+- aws eks update-kubeconfig --region us-east-2 --name houston-eks
+
+View contexts:
+
+- kubectl config view
+
+List current context:
+
+- kubectl config current-context
+
+See all avaiable contexts:
+
+- kubectl config get-contexts
+
+Set current context:
+
+- kubectl config use-context arn:aws:eks:us-east-2:090378945367:cluster/houston-eks
+- kubectl config use-context docker-desktop
+
+Test the connection:
+
+- kubectl get svc
+
+## Amazon EKS Addons
+
+Use the following commands to get a list of available addons:
+
+- eksctl utils describe-addon-versions --kubernetes-version 1.28 | grep AddonName
+
+The following command will list available versions:
+
+- eksctl utils describe-addon-versions --kubernetes-version 1.28 --name kube-proxy | grep AddonVersion
+
+Determine if AWS or third party addon be presence of ProductUrl
+
+- eksctl utils describe-addon-versions --kubernetes-version 1.28 --name name-of-addon | grep ProductUrl
+
+The following command will install and overwrite self manages addons:
+
+- eksctl create addon --cluster houston-eks --name kube-proxy --version v1.28.1-eksbuild.1 --service-account-role-arn arn:aws:iam::090378945367:role/eksClusterRole --force
+- eksctl create addon --cluster houston-eks --name vpc-cni --version v1.14.1-eksbuild.1 --force
+
+This needs done after the node group has been booted up.
+
+- eksctl create addon --cluster houston-eks --name coredns --version v1.14.1-eksbuild.1 --force
