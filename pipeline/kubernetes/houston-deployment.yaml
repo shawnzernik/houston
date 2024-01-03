@@ -1,0 +1,59 @@
+# Deployment Configuration
+# This section creates a deployment with the specified number of replicas using a Docker image.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: szmsg-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: szmsg
+  template:
+    metadata:
+      labels:
+        app: szmsg
+    spec:
+      containers:
+      - name: szmsg
+        image: 090378945367.dkr.ecr.us-east-2.amazonaws.com/szmsg:1.0.0
+        ports:
+        - containerPort: 8080
+
+---
+
+# LoadBalancer Service Configuration
+# This section exposes the application externally using a LoadBalancer, which AWS provisions.
+apiVersion: v1
+kind: Service
+metadata:
+  name: szmsg-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: szmsg
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+
+---
+
+# Ingress Configuration (Optional)
+# This section defines the Ingress resource to route external HTTP traffic to the service.
+# Note: Only include this section if you have an Ingress controller set up in your cluster.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: szmsg-ingress
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: szmsg-service
+            port:
+              number: 8080

@@ -192,7 +192,3 @@ The following command will install and overwrite self manages addons:
 
 - eksctl create addon --cluster houston-eks --name kube-proxy --version v1.28.1-eksbuild.1 --service-account-role-arn arn:aws:iam::090378945367:role/eksClusterRole --force
 - eksctl create addon --cluster houston-eks --name vpc-cni --version v1.14.1-eksbuild.1 --force
-
-This needs done after the node group has been booted up.
-
-- eksctl create addon --cluster houston-eks --name coredns --version v1.14.1-eksbuild.1 --force

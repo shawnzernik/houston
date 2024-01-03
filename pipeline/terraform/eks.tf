@@ -159,9 +159,21 @@ resource "aws_eks_node_group" "houston_eks_node_group" {
     source_security_group_ids = [aws_security_group.houston_security_group.id]
   }
 
-  instance_types = ["t2.medium", "t3.medium", "t3a.medium", "c5.large", "c5a.large", "c5ad.large", "c5d.large", "c6a.large", "c6i.large", "c6id.large", "c6in.large", "c7a.large", "c7i.large"] # 2CPU 4GB
-  #capacity_type  = "SPOT"
-  capacity_type = "ON_DEMAND"
+  instance_types = [
+    "t2.medium",
+    "t3.medium",
+    "t3a.medium",
+    "c5.large",
+    "c5a.large",
+    "c6a.large",
+    "c6i.large",
+    "c6in.large",
+    "c7a.large",
+    "c7i.large"
+  ] # 2CPU 4GB
+  
+  capacity_type  = "SPOT"
+  #capacity_type = "ON_DEMAND"
   disk_size     = 20
 
   tags = {
@@ -179,7 +191,7 @@ resource "aws_eks_addon" "coredns" {
   addon_version               = "v1.10.1-eksbuild.2"
   resolve_conflicts_on_create = "OVERWRITE"
 
-  depends_on = [ aws_eks_node_group.houston_eks_node_group ]
+  depends_on = [aws_eks_node_group.houston_eks_node_group]
 
   configuration_values = jsonencode({
     replicaCount = 2

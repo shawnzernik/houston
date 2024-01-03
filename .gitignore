@@ -18,3 +18,4 @@ pipeline/terraform/.terraform
 tf_log.txt
 terraform.tfstate
 terraform.tfstate.backup
+.terraform.tfstate.lock.info
