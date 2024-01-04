@@ -209,15 +209,26 @@ resource "aws_eks_node_group" "houston-eks-node-group" {
     # source_security_group_ids = [aws_security_group.houston-security-group.id]
   }
 
+  # ami_type = "AL2_x86_64"
+  ami_type = "AL2_ARM_64"  
+
   instance_types = [
-    # # 2CPU GB @ $0.02/hr
+    # # x86/AMD64 2CPU 2GB @ $0.02/hr
     # "t3a.small",
     # "t3.small"
 
-    # 2CPU 4GB @ 0.04/hr
-    "t2.medium",
-    "t3.medium",
-    "t3a.medium"
+    # # x86/AMD 64 2CPU 4GB @ 0.04/hr
+    # "t2.medium",
+    # "t3.medium",
+    # "t3a.medium"
+
+    # ARM 2CPU 2GB @ 0.0168/hr
+    "t4g.small"
+
+    # # ARM 1CPU 2GB @ 0.035/hr
+    # "a1.medium", # 0.0255
+    # "c6g.medium", # 0.034
+    # "c7g.medium" # 0.0361
   ]
 
   capacity_type = "SPOT"

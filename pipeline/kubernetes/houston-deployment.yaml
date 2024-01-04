@@ -19,6 +19,9 @@ spec:
         image: 090378945367.dkr.ecr.us-east-2.amazonaws.com/szmsg:1.0.0
         ports:
         - containerPort: 8080
+        env:
+        - name: CONNECTION_STRING
+          value: "Data Source=messageboard-database.cjmkgk4ys7so.us-east-2.rds.amazonaws.com;Initial Catalog=MessageBoard;User ID=admin;Password=Welcome123;TrustServerCertificate=Yes"
 
 ---
 
