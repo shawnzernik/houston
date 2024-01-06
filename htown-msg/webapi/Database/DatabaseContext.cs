@@ -5,10 +5,10 @@ namespace webapi.Database;
 public class DatabaseContext : DbContext
 {
     private static readonly Logger logger = new Logger(typeof(DatabaseContext));
-    private static readonly string? connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
+    private static readonly string? connectionString = 
+        Environment.GetEnvironmentVariable("CONNECTION_STRING");
 
     /********************************************************************************
-     *
      * Entity Framework 8 Documentation
      * https://learn.microsoft.com/en-us/ef/core/
      * 
@@ -18,7 +18,6 @@ public class DatabaseContext : DbContext
      *          <InvariantGlobalization>false</InvariantGlobalization>
      *     </PropertyGroup>         
      * </Project>         
-     * 
      ********************************************************************************/
 
     public DbSet<UserEntity> Users { get; set; }

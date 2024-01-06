@@ -8,6 +8,9 @@
 			"preLaunchTask": "dotnet build",
 			"program": "${workspaceFolder}/htown-msg/webapi/bin/Debug/net8.0/webapi.dll",
 			"args": [],
+			"env": {
+				"CONNECTION_STRING": "Data Source=LOCALHOST;Initial Catalog=MessageBoard;User ID=sa;Password=Welcome123;TrustServerCertificate=Yes"
+			},
 			"cwd": "${workspaceFolder}/htown-msg/webapi",
 			"stopAtEntry": false,
 			"serverReadyAction": {
