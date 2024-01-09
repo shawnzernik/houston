@@ -93,35 +93,35 @@ resource "aws_iam_policy_attachment" "eksEcrPolicyAttachment" {
 }
 
 
-################################################################################
+###############################################################################
 # houston-security-group
-################################################################################
-# resource "aws_security_group" "houston-security-group" {
-#   name        = "houston-security-group"
-#   description = "Houston Security Group"
+###############################################################################
+resource "aws_security_group" "houston-security-group" {
+  name        = "houston-security-group"
+  description = "Houston Security Group"
 
-#   // Allow all inbound traffic
-#   ingress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"
-#     cidr_blocks = ["0.0.0.0/0"]
+  // Allow all inbound traffic
+  ingress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["172.31.0.0/16"]
 
-#   }
+  }
 
-#   // Allow all outbound traffic
-#   egress {
-#     from_port   = 0
-#     to_port     = 0
-#     protocol    = "-1"
-#     cidr_blocks = ["0.0.0.0/0"]
-#   }
+  // Allow all outbound traffic
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 
-#   // Add the "application" tag
-#   tags = {
-#     application = "kube"
-#   }
-# }
+  // Add the "application" tag
+  tags = {
+    application = "kube"
+  }
+}
 
 ################################################################################
 # EKS
@@ -137,7 +137,7 @@ resource "aws_eks_cluster" "houston-eks" {
       "subnet-029fb915098a9c089",
       "subnet-07fa1b93a76243f83"
     ]
-    # security_group_ids      = [aws_security_group.houston-security-group.id] # Use underscores here
+    security_group_ids      = [aws_security_group.houston-security-group.id]
     endpoint_public_access  = false
     endpoint_private_access = true
   }
@@ -153,26 +153,6 @@ resource "aws_eks_cluster" "houston-eks" {
     service_ipv4_cidr = "10.100.0.0/16"
     ip_family         = "ipv4"
   }
-
-  # # Using create addon will give the following error: 
-  # #   - Addon kube_proxy specified is not supported in 1.28 kubernetes version
-  # # The kube-proxy was installed using a "self managed" version since this we not done through the web Management Console: 
-  # #   - Addon kube_proxy specified is not supported in 1.28 kubernetes version
-  # # Use the following command to create a managed kube-proxy
-  # #   - eksctl create addon --cluster houston-eks --name kube-proxy --version v1.28.1-eksbuild.1 --service-account-role-arn arn:aws:iam::090378945367:role/eksClusterRole --force
-  # provisioner "local-exec" {
-  #   command = "eksctl create addon --cluster houston-eks --name kube-proxy --version v1.28.1-eksbuild.1 --service-account-role-arn arn:aws:iam::090378945367:role/eksClusterRole --force"
-  # }
-
-  # # Using create addon will give the following error: 
-  # #   - Addon vpc_cni specified is not supported in 1.28 kubernetes version
-  # # The kube-proxy was installed using a "self managed" version since this we not done through the web Management Console: 
-  # #   - Addon vpc_cni specified is not supported in 1.28 kubernetes version
-  # # Use the following command to create a managed kube-proxy
-  # #   - eksctl create addon --cluster houston-eks --name vpc-cni --version v1.14.1-eksbuild.1 --force
-  # provisioner "local-exec" {
-  #   command = "eksctl create addon --cluster houston-eks --name vpc-cni --version v1.14.1-eksbuild.1 --force"
-  # }
 }
 
 ################################################################################
@@ -180,6 +160,8 @@ resource "aws_eks_cluster" "houston-eks" {
 ################################################################################
 resource "aws_key_pair" "houston-node-group-keypair" {
   key_name   = "houston-node-group-keypair"
+
+  # ssh-keygen -t rsa -b 2048 -f my-eks-keypair
   public_key = file("${path.module}/houston-node-group-keypair.pub")
 
   tags = {
@@ -245,20 +227,3 @@ resource "aws_eks_node_group" "houston-eks-node-group" {
     aws_eks_cluster.houston-eks
   ]
 }
-
-# resource "aws_eks_addon" "coredns" {
-#   cluster_name                = aws_eks_cluster.houston-eks.name
-#   addon_name                  = "coredns"
-#   addon_version               = "v1.10.1-eksbuild.2"
-#   resolve_conflicts_on_create = "OVERWRITE"
-
-#   depends_on = [aws_eks_node_group.houston-eks-node-group]
-
-#   configuration_values = jsonencode({
-#     replicaCount = 2
-#   })
-
-#   tags = {
-#     application = "kube"
-#   }
-# }
